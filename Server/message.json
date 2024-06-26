@@ -1,0 +1,120 @@
+[
+    {
+        "name" : "Kết nối socket",
+        "request" : "{namePerson}",
+        "response" : "{idPerson}"
+    },
+    {
+        "name" : "Lấy danh sách phòng",
+        "request" : "get_all_rooms-null",
+        "response" : "rooms|id1#name1#owner1#persons1,id2#name2#owner2#persons2"
+    },
+    {
+        "name" : "Tham gia phòng chat",
+        "request" : "join_rooms-{IDRoom}",
+        "response" : [
+            "accept_join|{idRoom}",
+            "deny_join|{idRoom}"
+        ],
+        "action_in_server" : "Thông báo cho các thành viên hiện tại trong phòng chat"
+    },
+    {
+        "name" : "Tạo phòng chat",
+        "request" : "create_room-{nameRoom}",
+        "response" : [
+            "accept_create|{idRoom}",
+            "deny_create|{idRoom}"
+        ],
+        "action_in_server" : "Cập nhật dashboard phòng chat cho list user hiện có"
+    },
+    {
+        "name" : "Rời phòng chat",
+        "request" : "leave_room-{IDRoom}-{hasAskClient}",
+        "response" :[
+            "ask_leave|{nameRoom}"
+        ],
+        "action_in_server" : "Thông báo cho các thành viên hiện tại trong phòng chat, hỏi client nếu client là chủ phòng"
+    },
+    {
+        "name" : "Kiểm tra quyền admin trong phòng",
+        "request" : "check_admin-null",
+        "response" : "admin|{isOwner(1/0)}"
+    },
+    {
+        "name" : "Kick người dùng khỏi phòng chat",
+        "request" : "kick-{idUserBeKick}",
+        "action_in_server" : "Gửi thông báo kick cho người dùng bị kick, xóa người dùng khỏi phòng",
+        "response" : "kick|{nameOwner}"
+    },
+    {
+        "name" : "Xóa hết người dùng khỏi phòng chat",
+        "action_in_server" : "Gửi thông báo kick cho tất cả người dùng là bị kick, xóa người dùng khỏi phòng",
+        "response" : [
+            "roomHasBeenDeleted|null",
+            "kick_all|null"
+        ]
+    },
+    {
+        "name" : "Gửi tin nhắn",
+        "request" : "send_msg-{idPerson}-{request}",
+        "response" : [],
+        "action_in_server" : "Gửi tin nhắn global cho toàn bộ thành viên phòng chat"
+    },
+    {
+        "name" : "Lấy danh sách người trong phòng",
+        "request" : "get_persons-null",
+        "response" : "persons|id1#name1,id2#name2"
+    },
+    {
+        "name" : "Lấy danh sách tin nhắn",
+        "request" : "get_requests-{IDRoom}",
+        "response" : "requests|id1#request1#idPerson1,id2#request2#idPerson2"
+    },
+    {
+        "name" : "Đặt mật khẩu phòng chat",
+        "request" : "set_password-{password}",
+        "response" : [
+            "accept_set_password|null",
+            "deny_set_password|null"
+        ]
+    },
+    {
+        "name" : "Kiểm tra mật khẩu phòng chat",
+        "message_from_server" : "Yêu cầu nhập mật khẩu (request_password|{idRoom})",
+        "request" : "check_password-{idRoom}-{password}",
+        "response" : "password|{isCorrect(1/0)}"
+    },
+    {
+        "name" : "Upload file lên máy chủ phòng chat",
+        "request" : "upload_file-{fileName}",
+        "response" : [
+            "accept_upload_file|{fileName}",
+            "deny_upload_file|{fileName}"
+        ]
+    },
+    {
+        "name" : "Download file từ máy chủ phòng chat",
+        "request" : "download_file-{fileName}",
+        "response" : "file|{fileName}"
+    },
+    {
+        "name" : "Lấy danh sách file trong phòng chat",
+        "request" : "get_files-null",
+        "response" : "files|fileName1#size1#type1#owner1,fileName2#size2#type2#owner2"
+    },
+    {
+        "name" : "Yêu cầu cập nhật file trong phòng chat",
+        "action_in_server" : "Gửi thông báo cập nhật file cho tất cả thành viên phòng chat",
+        "response" : "new_attachment|null"
+    },
+    {
+        "name" : "Xóa file trong phòng chat",
+        "request" : "delete_file-{fileName}",
+        "response" : [
+            "accept_delete_file|{fileName}",
+            "deny_delete_file|{fileName}",
+            "file_not_found|{fileName}",
+            "not_owner|{fileName}"
+        ]
+    }
+]
